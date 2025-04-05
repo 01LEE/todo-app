@@ -7,6 +7,14 @@ import { useState } from 'react';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
+// 보통의 경우 navigation은 bottom에 쓴다
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
+
+
+// icons
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'; // materialCommunity Icons 
+
 
 function HomeScreen() {
   const navigation = useNavigation(); // 복잡할 경우 사용할 수 있는 hook 
@@ -63,44 +71,99 @@ const TodoWriteScreen = ({ navigation, route }) => {
   );
 }
 
-function DetailScreen({ navigation, route }) { // 복잡하지 않기에 그냥 매개변수 자체로 navigation을 사용한다
-  const todos = route?.params?.todos ? route.params.todos : '작성된 내용이 없습니다.';
 
+const TodoSearchScreen = ({ navigation, route }) => {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text style={{ fontSize: 40, fontWeight: 'bold' }}>상세보기 화면</Text>
-      <Text>작성 내용 : {todos}</Text>
-
-      <Button title='Go to Home' onPress={() => navigation.navigate('Home')} />
-      <Button title='Go to Detail' onPress={() => navigation.push('Detail')} />
-
-
-
-
+      <Text style={{ fontSize: 40, fontWeight: 'bold' }}>검색</Text>
     </View>
   );
 }
+
+const TodoListScreen = ({ navigation, route }) => {
+  return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Text style={{ fontSize: 40, fontWeight: 'bold' }}>목록</Text>
+    </View>
+  );
+}
+
+const MyPageScreen = ({ navigation, route }) => {
+  return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Text style={{ fontSize: 40, fontWeight: 'bold' }}>내 정보</Text>
+    </View>
+  );
+}
+
 const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
 
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator
-        initialRouteName="Home"
-        screenOptions={{
-          headerStyle: { backgroundColor: '#f4511e' },
-          headerTintColor: '#fff',
-          headerRight: () => (
-            <Pressable
-              onPress={() => alert('This is a button!')}>
-              <Text style={{ marginRight: 10, color: '#fff' }}>Menu</Text>
-            </Pressable>
+      <Tab.Navigator screenOptions={({ route }) => ({
+        tabBarLabelStyle: {
+          fontSize: 14,
+          paddingBottom: 10,
+          fontWeight: 'bold'
+        },
+        tabBarStyle: {
+          height: 60
+        },
+        tabBarInactiveTintColor: '#0163d2',
+        tabBarActiveTintColor: 'black',
+        tabBarIcon: ({ color, size }) => {
+          let iconName;
+
+          if (route.name == "Home") {
+            iconName = "home-variant";
+          } else if (route.name == "TodoSearch") {
+            iconName = "text-search"
+          } else if (route.name == "TodoWrite") {
+            iconName = "note-edit";
+          } else if (route.name == "TodoList") {
+            iconName = "view-list";
+          } else if (route.name == "MyPage") {
+            iconName = "account-circle"
+          }
+          return (
+            <MaterialCommunityIcons name={iconName} size={size} color={color} />
           )
-        }}>
-        <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="Detail" component={DetailScreen} />
-        <Stack.Screen name="TodoWrite" component={TodoWriteScreen} />
-      </Stack.Navigator>
+
+        }
+      })}
+      >
+        <Tab.Screen name="Home" component={HomeScreen}
+          options={
+            {
+              title: '홈',
+            }} />
+        <Tab.Screen name="TodoSearch" component={TodoSearchScreen}
+          options={
+            {
+              title: '검색',
+            }
+          } />
+        <Tab.Screen name="TodoWrite" component={TodoWriteScreen}
+          options={
+            {
+              title: '작성',
+            }
+          } />
+        <Tab.Screen name="TodoList" component={TodoListScreen}
+          options={
+            {
+              title: '목록',
+            }
+          } />
+        <Tab.Screen name="MyPage" component={MyPageScreen}
+          options={
+            {
+              title: '내 정보',
+            }
+          } />
+      </Tab.Navigator>
     </NavigationContainer>
   );
 }
