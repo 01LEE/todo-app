@@ -85,7 +85,18 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
+      <Stack.Navigator
+        initialRouteName="Home"
+        screenOptions={{
+          headerStyle: { backgroundColor: '#f4511e' },
+          headerTintColor: '#fff',
+          headerRight: () => (
+            <Pressable
+              onPress={() => alert('This is a button!')}>
+              <Text style={{ marginRight: 10, color: '#fff' }}>Menu</Text>
+            </Pressable>
+          )
+        }}>
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Detail" component={DetailScreen} />
         <Stack.Screen name="TodoWrite" component={TodoWriteScreen} />
