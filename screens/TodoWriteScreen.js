@@ -1,29 +1,8 @@
 import { StyleSheet, Text, View, Button, TextInput, Pressable, Alert } from 'react-native';
 import React, { useState, useRef } from 'react';
 
-//유틸리티
+import { dateToStr } from '../utils/util';
 
-
-// 날짜 객체 입력 받아서 문장 (yyyy-mm-dd hh:mm:ss)로 반환한다
-function dateToStr(d) {
-    const pad = (n) => {
-        return n < 10 ? "0" + n : n;
-    };
-
-    return (
-        d.getFullYear() +
-        "-" +
-        pad(d.getMonth() + 1) +
-        "-" +
-        pad(d.getDate()) +
-        " " +
-        pad(d.getHours()) +
-        ":" +
-        pad(d.getMinutes()) +
-        ":" +
-        pad(d.getSeconds())
-    );
-}
 
 
 
@@ -87,7 +66,7 @@ const TodoWriteScreen = ({ navigation }) => {
                 <Pressable
                     style={style.PressableBtn}
                     onPress={() => {
-                        navigation.navigate('Home', { todos });
+                        navigation.navigate('Home');
                     }}>
                     <Text >취소</Text>
                 </Pressable>
