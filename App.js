@@ -30,6 +30,15 @@ export default function App() {
       return <IconComponent name={iconName} size={size} color={color} />
 
     },
+    // header title 중앙으로 이동
+    headerTitleAlign: 'center',
+    headerTitleStyle: {
+      fontSize: 20,
+      fontWeight: 'bold',
+    },
+    headerStyle: {
+      elevation: 20
+    },
 
     tabBarLabelStyle: {
       fontSize: 14,

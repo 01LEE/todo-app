@@ -12,7 +12,7 @@ import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'; 
 const tabConfig = [
     {
       name: "Home",
-      title: "메인 화면",
+      title: "홈",
       component: HomeScreen,
       focusedIcon: "home-variant",
       unfocusedIcon: "home-variant-outline",
